@@ -133,10 +133,14 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # MongoDB Configuration
 MONGODB_CONFIG = {
-    "uri": os.getenv("MONGODB_URI", "mongodb+srv://admin:admin@leads.wmwnrnx.mongodb.net/?appName=leads"),
+    "uri": os.getenv("MONGODB_URI"),
     "database": os.getenv("MONGODB_DATABASE", "lead_crm"),
     "collections": {"leads": "leads", "stages": "stages", "configs": "configs"},
 }
+
+# Raise error if MONGODB_URI is not set
+if not MONGODB_CONFIG["uri"]:
+    raise ValueError("MONGODB_URI environment variable is required")
 
 # CORS Configuration
 CORS_ALLOWED_ORIGINS_ENV = os.getenv("CORS_ALLOWED_ORIGINS", "")
