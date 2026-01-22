@@ -46,19 +46,31 @@ export const CreateLeadModal: React.FC<CreateLeadModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    createMutation.mutate({
+    
+    // Build the payload, only including optional fields if they have values
+    const payload: any = {
       name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
       config: configUid,
       current_stage: formData.stage,
       properties: {
-        company: formData.company,
         priority: formData.priority,
       },
       config_values: [],
       assigned_to: [],
-    });
+    };
+
+    // Add optional fields only if they have values
+    if (formData.email?.trim()) {
+      payload.email = formData.email.trim();
+    }
+    if (formData.phone?.trim()) {
+      payload.phone = formData.phone.trim();
+    }
+    if (formData.company?.trim()) {
+      payload.properties.company = formData.company.trim();
+    }
+
+    createMutation.mutate(payload);
   };
 
   return (
@@ -73,7 +85,7 @@ export const CreateLeadModal: React.FC<CreateLeadModalProps> = ({
         />
 
         <Input
-          label="Email"
+          label="Email (optional)"
           type="email"
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -81,7 +93,7 @@ export const CreateLeadModal: React.FC<CreateLeadModalProps> = ({
         />
 
         <Input
-          label="Phone"
+          label="Phone (optional)"
           type="tel"
           value={formData.phone}
           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -89,7 +101,7 @@ export const CreateLeadModal: React.FC<CreateLeadModalProps> = ({
         />
 
         <Input
-          label="Company"
+          label="Company (optional)"
           value={formData.company}
           onChange={(e) => setFormData({ ...formData, company: e.target.value })}
           placeholder="Acme Inc."
