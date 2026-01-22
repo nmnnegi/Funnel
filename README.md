@@ -1,4 +1,4 @@
-# Lead CRM System
+# Funnel
 
 A modern Lead Management System with Django REST Framework backend and React frontend, designed for managing leads through customizable workflow stages.
 

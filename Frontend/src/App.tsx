@@ -8,6 +8,8 @@ import { DashboardPage } from './pages/dashboard/DashboardPage';
 import { LeadsPage } from './pages/leads/LeadsPage';
 import { StagesPage } from './pages/stages/StagesPage';
 import { SettingsPage } from './pages/settings/SettingsPage';
+import { LoginPage } from './pages/auth/LoginPage';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { useAppDispatch } from './hooks/useRedux';
 import { setConfigs } from './store/slices/configsSlice';
 import { configsApi } from './services/configs';
@@ -46,15 +48,38 @@ function AppContent() {
   try {
     return (
       <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<DashboardPage />} />
-            <Route path="/leads" element={<LeadsPage />} />
-            <Route path="/stages" element={<StagesPage />} />
-            <Route path="/settings" element={<SettingsPage />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </Layout>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={
+            <ProtectedRoute>
+              <Layout>
+                <DashboardPage />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/leads" element={
+            <ProtectedRoute>
+              <Layout>
+                <LeadsPage />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/stages" element={
+            <ProtectedRoute>
+              <Layout>
+                <StagesPage />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/settings" element={
+            <ProtectedRoute>
+              <Layout>
+                <SettingsPage />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </BrowserRouter>
     );
   } catch (error) {

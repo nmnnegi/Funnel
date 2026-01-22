@@ -1,6 +1,8 @@
 import React from 'react';
-import { Menu, Bell } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Menu, Bell, LogOut } from 'lucide-react';
 import { useAppSelector } from '../../hooks/useRedux';
+import { logout, getUsername } from '../../utils/auth';
 
 interface NavbarProps {
   onToggleSidebar: () => void;
@@ -8,6 +10,13 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
   const selectedConfig = useAppSelector((state) => state.configs.selectedConfig);
+  const navigate = useNavigate();
+  const username = getUsername();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 h-16 bg-white border-b border-gray-200 z-40">
@@ -22,10 +31,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
           
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">L</span>
+              <span className="text-white font-bold text-lg">F</span>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">Lead CRM</h1>
+              <h1 className="text-xl font-bold text-gray-900">Funnel</h1>
               {selectedConfig && (
                 <p className="text-xs text-gray-500">{selectedConfig.workflow_name}</p>
               )}
@@ -40,9 +49,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar }) => {
           </button>
           
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
-              <span className="text-gray-700 font-semibold">U</span>
+            <div className="flex items-center space-x-2">
+              <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
+                <span className="text-gray-700 font-semibold">
+                  {username?.charAt(0).toUpperCase() || 'U'}
+                </span>
+              </div>
+              <span className="text-sm font-medium text-gray-700 hidden md:block">{username}</span>
             </div>
+            <button
+              onClick={handleLogout}
+              className="p-2 rounded-lg hover:bg-red-50 text-red-600 transition-colors"
+              title="Logout"
+            >
+              <LogOut size={20} />
+            </button>
           </div>
         </div>
       </div>
