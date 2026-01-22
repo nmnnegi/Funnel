@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+</head>
+<body>
+    <h1>Test Page</h1>
+    <p>If you see this, the server is working!</p>
+    <script>
+        console.log('Test page loaded');
+        fetch('http://localhost:8000/api/configs/')
+            .then(res => res.json())
+            .then(data => {
+                console.log('API Response:', data);
+                document.body.innerHTML += '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            })
+            .catch(err => {
+                console.error('API Error:', err);
+                document.body.innerHTML += '<p style="color:red">API Error: ' + err.message + '</p>';
+            });
+    </script>
+</body>
+</html>
