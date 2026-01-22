@@ -1,3 +1,4 @@
+// Authentication utilities
 export const isAuthenticated = (): boolean => {
   return localStorage.getItem('isAuthenticated') === 'true';
 };
@@ -10,3 +11,4 @@ export const logout = (): void => {
   localStorage.removeItem('isAuthenticated');
   localStorage.removeItem('username');
 };
+
