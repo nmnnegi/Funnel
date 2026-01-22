@@ -24,9 +24,11 @@ export const LeadCard: React.FC<LeadCardProps> = ({ lead, onDragStart, onClick }
     >
       <div className="flex items-start justify-between mb-3">
         <h4 className="font-semibold text-gray-900">{lead.name}</h4>
-        <span className={`px-2 py-1 rounded text-xs font-medium ${priorityColors[lead.priority]}`}>
-          {lead.priority}
-        </span>
+        {lead.priority && (
+          <span className={`px-2 py-1 rounded text-xs font-medium ${priorityColors[lead.priority]}`}>
+            {lead.priority}
+          </span>
+        )}
       </div>
 
       <div className="space-y-2 text-sm text-gray-600">

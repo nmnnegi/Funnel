@@ -49,10 +49,9 @@ export const CreateLeadModal: React.FC<CreateLeadModalProps> = ({
     createMutation.mutate({
       ...formData,
       config: configUid,
-      tags: [],
-      custom_fields: {},
-      stage_data: {},
-      notes: [],
+      properties: {},
+      config_values: [],
+      assigned_to: [],
     });
   };
 
