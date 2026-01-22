@@ -47,9 +47,15 @@ export const CreateLeadModal: React.FC<CreateLeadModalProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     createMutation.mutate({
-      ...formData,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
       config: configUid,
-      properties: {},
+      current_stage: formData.stage,
+      properties: {
+        company: formData.company,
+        priority: formData.priority,
+      },
       config_values: [],
       assigned_to: [],
     });
