@@ -188,7 +188,9 @@ class LeadCreateSerializer(serializers.Serializer):
     name = serializers.CharField()
     email = serializers.EmailField(required=False, allow_null=True)
     phone = serializers.CharField(required=False, allow_null=True)
+    config = serializers.CharField()
     current_stage = serializers.CharField()
+    properties = serializers.DictField(required=False, default=dict)
     config_values = ConfigFieldValueSerializer(many=True, required=False, default=list)
     assigned_to = serializers.ListField(
         child=serializers.CharField(), required=False, default=list
